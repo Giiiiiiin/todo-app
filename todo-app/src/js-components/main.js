@@ -2,87 +2,90 @@ import '../css-components/main.css';
 import React from "react";
 import Button from 'react-bootstrap/Button';
 import { useState } from 'react';
-/*
-import Modal from 'react-bootstrap/Modal';
-*/
 
 const ToDoList = (props) => {
-  const [taskList, setTaskList] = useState(["one", "two", "3", "JHIN"]);
+  const [taskList, setTaskList] = useState([
+    { text: "one", isCompleted: false },
+    { text: "two", isCompleted: false },
+    { text: "3", isCompleted: false },
+    { text: "JHIN", isCompleted: false },
+  ]);
   const [newTask, setNewTask] = useState("");
   const [edit, setEdit] = useState(false);
   const [save, setSave] = useState("");
-  const [isActive, setActive] = useState("");
-
 
   function handleInputChange(event) {
-    setNewTask(event.target.value)
-  };
+    setNewTask(event.target.value);
+  }
 
   function addTask() {
-    if(newTask.trim() !== "") {
-      setTaskList(taskList => [...taskList, newTask]);
+    if (newTask.trim() !== "") {
+      setTaskList(taskList => [...taskList, { text: newTask, isCompleted: false }]);
       setNewTask("");
-    }
-    else {
+    } else {
       alert('Please enter a task name before adding.');
     }
-  };
-  
+  }
+
   function deleteTask(index) {
     const updateTasks = taskList.filter((_, i) => i !== index);
     setTaskList(updateTasks);
-  };
+  }
+
+  function toggleComplete(index) {
+    const updatedTasks = taskList.map((task, i) =>
+      i === index ? { ...task, isCompleted: !task.isCompleted } : task
+    );
+    setTaskList(updatedTasks);
+  }
 
   function submitTask(index) {
-    if(save.trim() !== "") {
-      taskList[index] = save;
-      setEdit(true);
+    if (save.trim() !== "") {
+      const updatedTasks = taskList.map((task, i) =>
+        i === index ? { ...task, text: save } : task
+      );
+      setTaskList(updatedTasks);
+      setEdit(false);
       setSave("");
-    }
-    else {
+    } else {
       alert('Please enter a new task name before editing.');
     }
   }
 
   return (
-      <div className='toDo'>
-        <p>Active</p>
-          <p className="txt-disable">Disabled</p>
-          <Button variant="info">Active</Button>
-          <br /><br />
-          <Button variant="info"className='btn-disable'>Disabled</Button>
-          <br /><br />
-          <Button variant="success">Complete</Button>
-          <Button variant="info">Edit</Button>
-          <Button variant="danger">Remove</Button>
-          <Button variant="success">Save</Button>
-
-        <h1>Real</h1>
-        <div>
-          <input 
-            type='text'
-            placeholder='Input task name...'
-            value={newTask}
-            onChange={handleInputChange}
-          />
-          <Button 
-            variant="success ms-1"
-            onClick={addTask}
+    <div className='toDo'>
+      <div>
+        <input 
+          type='text'
+          placeholder='Input task name...'
+          value={newTask}
+          onChange={handleInputChange}
+        />
+        <Button 
+          variant="success ms-1"
+          onClick={addTask}
+        >
+          Add
+        </Button>
+      </div>
+  <div className='toDo'>
+    {taskList.length === 0 ? (
+      <p>The list is empty</p>
+    ) : (
+      <ol>
+        {taskList.map((task, index) => (
+          <li 
+            className='mt-3' 
+            key={index} 
+            style={{ backgroundColor: task.isCompleted ? '#d3d3d3' : 'transparent' }} // Grey-out background
           >
-            Add
-          </Button>
-        </div>
-
-        <ol>
-          {taskList.map((task, index) =>
-            <li className='mt-3' key={index}>
-              {edit === index ? 
+            {edit === index ? (
               <>
                 <input 
                   className='mb-3 mt-3'
                   type='text'
-                  placeholder={task}
-                  onChange={(task) => setSave(task.target.value)}
+                  placeholder={task.text}
+                  onChange={(e) => setSave(e.target.value)}
                 />
                 <br />
                 <Button
@@ -95,61 +98,72 @@ const ToDoList = (props) => {
                 <Button
                   className='complete-btn me-3 mb-3 btn-disable'
                   variant='success'
-                  onClick={() => setActive(false)}
+                  onClick={() => toggleComplete(index)}
+                  disabled={task.isCompleted}
                 >
-                  Complete
+                  {task.isCompleted ? 'Undo' : 'Complete'}
                 </Button>
                 <Button
                   className='edit-btn me-3 mb-3 btn-disable'
                   variant='info'
                   onClick={() => setEdit(index)}
+                  disabled={task.isCompleted}
                 >
-                    Edit
+                  Edit
                 </Button>
                 <Button
                   className='delete-btn me-3 mb-3 btn-disable'
                   variant='danger'
                   onClick={() => deleteTask(index)}
+                  disabled={task.isCompleted}
                 >
                   Delete
                 </Button>
                 <Button
                   className='complete-btn me-3 mb-3'
                   variant='danger'
-                  onClick={() => setEdit(true)}
+                  onClick={() => setEdit(false)}
                 >
                   Cancel
                 </Button>
               </>
-              :
+            ) : (
               <>
-                <span className='text'><p>{task}</p></span>
+                <Button disabled="true"></Button>
+                <span className='text' style={{ textDecoration: task.isCompleted ? 'line-through' : 'none' }}>
+                  <p>{task.text}</p>
+                </span>
                 <Button
                   className='complete-btn me-3 mb-3'
                   variant='success'
-                  onClick={() => setActive(true)}
+                  onClick={() => toggleComplete(index)}
                 >
-                  Complete
+                  {task.isCompleted ? 'Undo' : 'Complete'}
                 </Button>
                 <Button
                   className='edit-btn me-3 mb-3'
                   variant='info'
                   onClick={() => setEdit(index)}
+                  disabled={task.isCompleted}
                 >
-                    Edit
+                  Edit
                 </Button>
                 <Button
                   className='delete-btn me-3 mb-3'
                   variant='danger'
                   onClick={() => deleteTask(index)}
+                  disabled={task.isCompleted}
                 >
                   Delete
                 </Button>
               </>
-              }
-            </li>
-          )}
-        </ol>
+            )}
+          </li>
+        ))}
+      </ol>
+    )}
+  </div>
+
       </div>
   );
 }

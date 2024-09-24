@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import './css-components/main.css';
@@ -10,7 +9,6 @@ function App() {
     <div className="App">
       <h1>To Do List:</h1>
       <ToDoList></ToDoList>
-
     </div>
   );
 }
