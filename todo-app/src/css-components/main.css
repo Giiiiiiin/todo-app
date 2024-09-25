@@ -1,14 +1,11 @@
+body{
+  background-color: #ED1E79;
+}
+
 .txt-disable {
   color: #808080;
   text-decoration: line-through;
 } 
-
-.btn-disable {
-  pointer-events: none;
-  border-color: #666666;
-  background-color: #cccccc;
-  color: #666666;
-}
 
 .toDo {
   font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -34,13 +31,5 @@ li {
   font-size: 1.3rem;
   font-weight: light;
   background-color: #f0f8ff;
-  border: 0.1rem solid #000000;
-}
-
-.disabled {
-  font-size: 1.3rem;
-  font-weight: light;
-  color: #808080;
-  text-decoration: line-through;
   border: 0.1rem solid #000000;
 }

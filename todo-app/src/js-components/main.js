@@ -77,10 +77,11 @@ const ToDoList = (props) => {
           <li 
             className='mt-3' 
             key={index} 
-            style={{ backgroundColor: task.isCompleted ? '#d3d3d3' : 'transparent' }} // Grey-out background
+            style={{ backgroundColor: task.isCompleted ? '#d3d3d3' : '#f0f8ff' }} // Grey-out background
           >
             {edit === index ? (
               <>
+                <Button disabled="true" variant='warning'></Button><br />
                 <input 
                   className='mb-3 mt-3'
                   type='text'
@@ -99,7 +100,7 @@ const ToDoList = (props) => {
                   className='complete-btn me-3 mb-3 btn-disable'
                   variant='success'
                   onClick={() => toggleComplete(index)}
-                  disabled={task.isCompleted}
+                  disabled="true"
                 >
                   {task.isCompleted ? 'Undo' : 'Complete'}
                 </Button>
@@ -107,7 +108,7 @@ const ToDoList = (props) => {
                   className='edit-btn me-3 mb-3 btn-disable'
                   variant='info'
                   onClick={() => setEdit(index)}
-                  disabled={task.isCompleted}
+                  disabled="true"
                 >
                   Edit
                 </Button>
@@ -115,7 +116,7 @@ const ToDoList = (props) => {
                   className='delete-btn me-3 mb-3 btn-disable'
                   variant='danger'
                   onClick={() => deleteTask(index)}
-                  disabled={task.isCompleted}
+                  disabled="true"
                 >
                   Delete
                 </Button>
@@ -129,7 +130,7 @@ const ToDoList = (props) => {
               </>
             ) : (
               <>
-                <Button disabled="true"></Button>
+                <Button disabled="true" variant={task.isCompleted ? 'success' : 'info'}></Button>
                 <span className='text' style={{ textDecoration: task.isCompleted ? 'line-through' : 'none' }}>
                   <p>{task.text}</p>
                 </span>
