@@ -70,7 +70,7 @@ const ToDoList = (props) => {
       </div>
   <div className='toDo'>
     {taskList.length === 0 ? (
-      <p>The list is empty</p>
+      <p>The list is empty... <br/><br/><br/> <b>Start by adding a task!</b></p>
     ) : (
       <ol>
         {taskList.map((task, index) => (
