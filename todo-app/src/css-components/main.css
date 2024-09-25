@@ -1,0 +1,35 @@
+body{
+  background-color: #ED1E79;
+}
+
+.txt-disable {
+  color: #808080;
+  text-decoration: line-through;
+} 
+
+.toDo {
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  text-align: center;
+  margin: 3rem;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+p {
+  font-size: 1.3rem;
+}
+
+input[type="text"] {
+  font-size: 0.9rem;
+  padding: 5px;
+  border-radius: 1rem;
+}
+
+li {
+  font-size: 1.3rem;
+  font-weight: light;
+  background-color: #f0f8ff;
+  border: 0.1rem solid #000000;
+}
